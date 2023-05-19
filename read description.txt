@@ -1,0 +1,53 @@
+App with flutter as front end and mongo as backend with nodejs and express.
+step 1 :- create the nodejs app using cmd.
+npm init 
+step 2 :- add library in the project using npm.
+cmd:-
+npm install express mongoose body-parser
+npm install bcrypt nodemon jsonwebtoken
+step 3:-
+1. create index.js
+const app = require('./app');
+const port = 3000;
+//app.get is req meathod to requets some thing
+app.get('/',(req,res)=>{
+    res.send('hello world!!!....')
+});
+//app.listen helps to listen to backend.
+app.listen(port,()=>{
+    console.log(`server listening to port http://localhost:${port}`);
+});
+
+
+2. create app.js
+//imports express
+const express = require("express");
+//app= express
+const app = express();
+//exports app
+module.exports = app;
+
+3. create folders such as config,controller,model,routes,services
+config = configration
+controllers = for taking req from routes and res to flutter
+model= db model
+routes= routing the req and taking req from flutter.
+services = mid ware between controllers and model
+
+
+step 4:-
+1. create a file by name of db.js in config 
+//import mongoose
+const  mongoose = require("mongoose");
+// connection with backend established and also check wheter ist connnected or not using on function.
+const connection =mongoose.createConnection('mongodb://127.0.0.1:27017').on("open",()=>{
+    console.log("connected to mongo ");}).on("error",()=>{
+        console.log('mongodb not conneted');
+    });
+
+// exports mongodb connection to use anywhere.
+module.exports=connection;
+
+2.update index file by by importing or calling db.js
+const db = require('./config/db');
+
